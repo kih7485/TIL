@@ -43,3 +43,8 @@ interface IStudent {
     age: number;
 }
 ```
+React에서 객체타입 정의는 object, interface, type alias가 있다.
+
+공식문서에서는 type보다 interface를 사용하라고 되어있음
+
+ 
