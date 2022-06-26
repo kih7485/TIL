@@ -6,20 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        a:visited{
-            color:green;
-        }
-        a:hover{
-            color:red;
-        }
-        
-        a:active{
-            color: gold;
-        }
+       .container{
+           display: flex;
+           flex-direction: column;
+       }
+       header{
+           border-bottom: 1px solid gray;
+       }
+       footer{
+           border-top: 1px solid gray;
+       }
+       .content{
+           display: flex;
+       }
     </style>
 </head>
 <body>
-    <a href="#">aaa</a>
-    <a href="#">bbb</a>
+   <div class="container">
+       <header>
+           <h1>하이</h1>
+       </header>
+       <section class="content">
+            <nav>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </ul>
+            </nav>
+            <main>
+                이직해야하는데 나는 실력이 많이 부족하구나.
+            </main>
+            <aside>
+                어사이드
+            </aside>
+       </section>
+
+       <footer>
+            푸터입니다.
+       </footer>
+   </div>
 </body>
 </html>
