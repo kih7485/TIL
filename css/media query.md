@@ -5,3 +5,11 @@
 ```css
 @media (조건문) { 실행코드 }
 ```
+
+
+### 뷰포트 정의
+- 뷰포트 메타 태그는 브라우저가 웹 페이지를 렌더링 할 때 동작하는 방법을 알려주고 뷰포트의 크기를 알 수 있습니다. 모바일 환경에서 미디어 쿼리를 적용하기 위해선 다음과 같은 메타태그를 선언해 주어야 한다.
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+```
