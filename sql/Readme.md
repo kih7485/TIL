@@ -120,6 +120,8 @@ for(let i=0; i< emp.length; i++){
 2. nested loop 힌트로 emp 테이블에 강제로 명령하였으므로 emp 테이블의 인덱스 수행.
 
 
+
+
 ### Sort Merge Join
 1. 소트단계 : 양쪽 집합을 조인 컬럼 기준으로 정렬
 2. 머지단계 : 정렬된 양쪽 집합을 서로 머지
@@ -127,6 +129,7 @@ for(let i=0; i< emp.length; i++){
   
 
 ### Hash Join
+- 해시조인은 이퀄 조건에서만 사용 가능
 
 #### 해시조인 사용기준
 - 한쪽 테이블이 Hash Area에 담길 정도로 충분히 작아야 함.
@@ -142,3 +145,109 @@ for(let i=0; i< emp.length; i++){
   -  hint를 남발하는 것은 좋지 않다 
 
 
+
+
+```sql
+    select * from 
+        (
+            select 
+                rownum as no,
+                등록일자,
+                번호,
+                제목,
+                회원명,
+                게시판유형명,
+                질문유형명,
+                아이콘,
+                (
+                    select count(*) from 댓글
+                    where 게시판번호 = A.게시판번호
+                ) as 댓글개수, /** 서브쿼리는 조인으로 변경해야 함. */
+            from  
+                게시판 A,
+                회원 B,
+                게시판유형 C,
+                질문유형 D
+            where
+                A.게시판유형 =:type
+                and B.회원번호 = A.작성자번호
+                and C.게시판유형 = A.게시판유형
+                and D.질문유형 = A.질문유형
+            order by A.등록일자 desc, A.질문유형, A.번호 
+        )
+        where rownum <= (:page*10)
+    )
+    where no >= (:page-1)*10 +1
+
+    /**
+        1. 먼저 회원, 게시판유형, 질문유형을 where rownum 있는 쪽으로 뺌.
+        2. 그 이후 게시판 테이블 인덱스 생성(type, 등록일자, 질문유형, 번호)
+     */
+
+
+```
+모범답안
+```sql
+    select 
+        A.등록일자,
+        A.번호,
+        A.제목,
+        A.회원명,
+        A.게시판유형명,
+        A.질문유형명,
+        A.아이콘,
+        (
+            select count(*) from 댓글
+            where 게시판번호 = A.게시판번호
+        ) as 댓글개수
+     from 
+        (
+            select 
+                A.*,
+                A.ROWNUM as NO
+            from  
+                게시판
+            where
+                게시판유형 =:type
+                and 작성자번호 is not null
+                and 게시판유형 is not null
+                and 질문유형 is not null
+            order by 등록일자 desc, 질문유형
+        ) A
+        where rownum <= (:page*10)
+    )   A,
+        회원 B,
+        게시판유형 C,
+        질문유형 D
+    where 
+        no >= (:page-1)*10 +1
+        and B.회원번호 = A.작성자번호
+                    and C.게시판유형 = A.게시판유형
+                    and D.질문유형 = A.질문유형
+    order by A.등록일자 desc, A.질문유형, A.번호 
+```
+<br/>
+
+------
+### sql 처리과정
+  1. sql 파싱
+  2. optimazation
+     1. Query Transformer
+     2. Estimator
+     3. Plan Generator
+  3. row-source generation
+  4. sql 엔진 실행
+
+
+
+#### 바인드 변수
+
+
+#### 바인드 변수의 부작용(바인드변수 피킹)
+```sql
+    select * from 아파트매물 where 도시 = ${CITY}
+```
+서울시나 경기도의 경우 테이블 풀스캔 하는게 낫지만, 그 이외의 도시일 땐 인덱스를 만드는게 좋을때 바인드 변수의 부작용이 생긴다.
+  
+#### 해결법
+- 입력 값에 따라 sql 분리(UNION ALL)
