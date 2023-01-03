@@ -1,18 +1,18 @@
 spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/data-jap
+    driver-class-name: org.h2.Driver
     username: sa
     password:
-    driver-class-name: org.h2.driver
 
-  jpa:
+jpa:
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
-#       show_sql: true
-        format_sql:true
+  #      show_sql: true
+        format_sql: true
 
 logging.level:
   org.hibernate.SQL: debug
-# org.hibernte.type: trace
+#  org.hibernate.type: trace
