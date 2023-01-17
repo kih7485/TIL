@@ -21,3 +21,14 @@ $: name
 <!-- class: 뒤에 클래스명, = 구문에는 조건을 넣어준다. -->
 <p class:description={userName}>A short description</p>
 ```
+
+- if문
+```html
+{#if true}
+    <p class:description={userName}>A short description</p>
+{:else if true}
+    <p class:description={userName}>A short description</p>
+{:else}
+    <p class:description={userName}>A short description</p>
+{/if}
+```
