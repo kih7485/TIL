@@ -32,3 +32,22 @@ $: name
     <p class:description={userName}>A short description</p>
 {/if}
 ```
+
+- for 문
+   - key 가 없으면 전체 리렌더링의 경우가 생기므로 key를 넣어주어야 한다.
+
+```html
+{#each createContacts as contact, i (contact.key)}
+  <h2>{i}</h2>
+  <ContactCard 
+  	userName={contact.name} 
+	jobTitle={contact.jobTitle} 
+	description={contact.desc} 
+	userImage={contact.imageUrl} 
+	/>
+  
+{/each}
+```
+each문 참고
+ - https://svelte.dev/tutorial/each-blocks
+ - https://svelte.dev/tutorial/keyed-each-blocks
