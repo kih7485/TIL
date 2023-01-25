@@ -66,3 +66,52 @@ presentational component
 - 데이터를 조작하지 않고 출력만 함.
 - modal, card, buttom 등이 해당. 
 
+createEventDispatcher
+- 디스패치 함수 생성
+  
+```js
+import {createEventDispatcher} from 'svelte'
+
+const dispatch = createEventDispatcher();
+
+function addToCart(){
+  //첫번째 인자는 전달할 이벤트명
+  //두번째 명은 전달할 인자(배열 객채 등)
+  dispatch('add-to-cart', {id:1, product:'냄비'})
+}
+
+```
+
+슬롯(slot)
+- 부모 컴포넌트가 자식 컴포넌트에게 콘텐츠를 전달하는 것
+
+ex)App.svelte
+```html
+<script>
+  import ChildComponent from './Child.svelte';
+</script>
+
+<div>
+  <ChildComponent>
+    <h2>Hello!</h2>
+    <p>Name: 홍길동</p>
+    <p>Age: 20</p>
+  </ChildComponent>
+</div>
+
+<style>
+div {
+  text-align: center;
+}
+</style>
+```
+ex)ChildComponent
+```html
+<div>
+  <slot>
+    전달받은 콘텐츠가 없습니다.
+  </slot>
+</div>
+```
+출처: https://developer-talk.tistory.com/601
+
