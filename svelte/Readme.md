@@ -115,3 +115,8 @@ ex)ChildComponent
 ```
 출처: https://developer-talk.tistory.com/601
 
+onMount
+-  컴포넌트가 처음으로 DOM에 렌더링 될 때 실행
+
+onDestroy
+- 컴포넌트가 제거되었을 때 호출
