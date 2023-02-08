@@ -120,3 +120,31 @@ onMount
 
 onDestroy
 - 컴포넌트가 제거되었을 때 호출
+
+tick()
+- props 또는 state가 DOM에 적용되자마자 Promise 객체를 반환
+
+
+데이터 바인딩
+```html
+<!-- checkbox -->
+<input type="checkbox" bind:checked={value}/>
+
+<!-- radio, checkbox  -->
+<input type="radio" name="color" value="red" bind:group={value}/>
+<input type="radio" name="color" value="green" bind:group={value}/>
+<input type="radio" name="color" value="blue" bind:group={value}/>
+
+<!-- select -->
+<select bind:value={value}>
+  <option value="green">green</option>
+  <option value="red">red</option>
+  <option value="blue">blue</option>
+</select>
+
+<!-- 요소 바인딩 -->
+<script>
+  let someDiv;
+</script>
+<div bind:this={someDiv}>someDiv</div>
+```
