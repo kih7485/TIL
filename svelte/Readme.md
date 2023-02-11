@@ -196,3 +196,6 @@ reset
 
 <h1>The count is {$count}</h1>
 ```
+
+readable
+- 구독만 가능(update 및 reset 불가)
