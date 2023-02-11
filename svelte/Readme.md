@@ -6,6 +6,7 @@ $: name
 
 - 스벨트의 데이터 흐름도 단방향이다. 
 - 스벨트 데이터 바인딩
+- $로 변수생성시 직접 const a = 1; 처럼 사전에 변수를 선언하지 않아도 된다.
 ```html
 <input type="text" value={name} on:input={nameInput} />
 <input type="text" bind:value={name}/>
@@ -147,4 +148,51 @@ tick()
   let someDiv;
 </script>
 <div bind:this={someDiv}>someDiv</div>
+```
+
+
+## store
+writable
+- store 초기 상태 선언
+
+subscribe
+- 값이 변경될 때마다 관련 프로그램에게 알림을 보냄
+```html
+<script>
+    import { count } from './stores.js';
+    import Incrementer from './Incrementer.svelte';
+    import Decrementer from './Decrementer.svelte';
+    import Resetter from './Resetter.svelte';
+
+    let countValue;
+
+    count.subscribe(value => {
+        countValue = value;
+    });
+</script>
+
+<h1>The count is {countValue}</h1>
+
+```
+
+update
+- store의 상태 업데이트
+  
+
+reset
+- store 초기화
+
+자동구독
+- 컴포넌트가 제거 되었을 때 subscribe의 리턴 값을 onDestroy 라이프 사이클 함수에서 호출하는 이 일련의 과정을 자동화
+- store 변수 정의는 최상위 스코프에 있어야 한다
+- $를 접두사로 사용하는 변수를 선언할 수 없다.
+```html
+<script>
+  import { count } from './stores.js';
+  import Incrementer from './Incrementer.svelte';
+  import Decrementer from './Decrementer.svelte';
+  import Resetter from './Resetter.svelte';
+</script>
+
+<h1>The count is {$count}</h1>
 ```
