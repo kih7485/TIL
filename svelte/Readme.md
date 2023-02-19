@@ -199,3 +199,19 @@ reset
 
 readable
 - 구독만 가능(update 및 reset 불가)
+
+Tweend
+
+- 트위닝 효과는 DOM에서 상태가 변경될 때, 변경되는 요소를 부드럽게 변경하는 것처럼 보여주는 효과로 프로그래스 바의 진행 막대를 변경할 때 주로 사용한다. Tweened는 아래와 같이 여러 개의 옵션을 제공한다.
+
+ 
+```
+tweened(value: any, { options })
+
+options 종류
+
+1) delay : Tweened 효과가 시작하기 전 시간
+2) duration : Tweened 효과가 지속되는 시간
+3) ease : 시간 경과에 따른 효과를 지정 (https://svelte.dev/docs#svelte_easing에 효과가 정의되어 있음)
+4) interpolate : Tweened 효과의 보간법 설정
+```
