@@ -215,3 +215,54 @@ options 종류
 3) ease : 시간 경과에 따른 효과를 지정 (https://svelte.dev/docs#svelte_easing에 효과가 정의되어 있음)
 4) interpolate : Tweened 효과의 보간법 설정
 ```
+
+
+svelt:self
+- <svelte:self>는 컴포넌트가 재귀적으로 자신을 포함할 수 있게 하는 요소d이다. 이 요소는 폴더 트리 구조와 같은 형태를 표현해야 할 때 유용함.
+
+```html
+<script>
+let files = [
+		{
+			name: 'Important work stuff',
+			files: [
+				{ name: 'quarterly-results.xlsx' }
+			]
+		},
+		{
+			name: 'Animal GIFs',
+			files: [
+				{
+					name: 'Dogs',
+					files: [
+						{ name: 'treadmill.gif' },
+						{ name: 'rope-jumping.gif' }
+					]
+				},
+				{
+					name: 'Goats',
+					files: [
+						{ name: 'parkour.gif' },
+						{ name: 'rampage.gif' }
+					]
+				},
+				{ name: 'cat-roomba.gif' },
+				{ name: 'duck-shuffle.gif' },
+				{ name: 'monkey-on-a-pig.gif' }
+			]
+		},
+		{ name: 'TODO.md' }
+	];
+
+</script>
+{#each files as file}
+  <li>
+    {#if file.files}
+      <svelte:self {...file}/>
+    {:else}
+      <File {...file}/>
+    {/if}
+  </li>
+{/each}
+```
+
