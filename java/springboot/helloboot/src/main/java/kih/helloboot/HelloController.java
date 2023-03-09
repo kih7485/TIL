@@ -1,13 +1,17 @@
 package kih.helloboot;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.Objects;
 
-@RestController
 public class HelloController {
+    private final HelloService helloService;
 
-    @GetMapping("/hello")
+    public HelloController(HelloService helloService) {
+        this.helloService = helloService;
+    }
+
     public String hello(String name){
-        return "hello" + name;
+        SimpleHelloService helloService = new SimpleHelloService();
+
+        return helloService.seyHello(Objects.requireNonNull(name));
     }
 }
