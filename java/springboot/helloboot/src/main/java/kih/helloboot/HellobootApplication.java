@@ -8,6 +8,8 @@ import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.context.support.GenericWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,32 +20,16 @@ import java.io.IOException;
 public class HellobootApplication {
 
 	public static void main(String[] args) throws LifecycleException {
-		GenericApplicationContext applicationContext = new GenericApplicationContext();
+		GenericWebApplicationContext applicationContext = new GenericWebApplicationContext();
 		applicationContext.registerBean(HelloController.class);
 		applicationContext.registerBean(SimpleHelloService.class);
 		applicationContext.refresh();
 
 		ServletWebServerFactory tomcatServletWebServerFactory = new TomcatServletWebServerFactory();
 		WebServer webServer = tomcatServletWebServerFactory.getWebServer(servletContext -> {
-			servletContext.addServlet("frontController", new HttpServlet() {
-
-				@Override
-				protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-					if(req.getRequestURI().equals("/hello")){
-						String name = req.getParameter("name");
-
-						HelloController helloController = applicationContext.getBean(HelloController.class);
-						String ret = helloController.hello(name);
-
-						resp.setStatus(HttpStatus.OK.value());
-						resp.setContentType(MediaType.TEXT_PLAIN_VALUE);
-						resp.getWriter().println(ret);
-
-					}else{
-						resp.setStatus(HttpStatus.NOT_FOUND.value());
-					}
-				}
-			}).addMapping("/*");
+			servletContext.addServlet("dispatcherServlet",
+					new DispatcherServlet(applicationContext)
+					).addMapping("/*");
 		});
 		webServer.start();
 
