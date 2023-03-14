@@ -15,19 +15,24 @@ public class HelloControllerTest {
 
     @Test
     void HelloApi(){
-        //localhost:8080/hello?name=hi
-        TestRestTemplate rest  = new TestRestTemplate();
+        HelloController helloController = new HelloController(name -> name);
+        String inhan = helloController.hello("inhan");
 
-        ResponseEntity<String> res =
-                rest.getForEntity("http://localhost:8080/hello?name={name}", String.class, "Spring");
+        Assertions.assertThat(inhan).isEqualTo("inhan");
+    }
 
-        //status 200
-        assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
+    @Test
+    void failHelloController(){
+        HelloController helloController = new HelloController(name -> name);
 
-        //header text/plain
-        assertThat(res.getHeaders().getFirst(HttpHeaders.CONTENT_TYPE)).startsWith(MediaType.TEXT_PLAIN_VALUE);
 
-        //body
-        assertThat(res.getBody()).isEqualTo("hello Spring");
+        assertThatThrownBy(() -> {
+            String inhan = helloController.hello(null);
+        }).isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(() -> {
+            String inhan = helloController.hello("");
+        }).isInstanceOf(IllegalArgumentException.class);
+//        Assertions.assertThat(inhan).isEqualTo(null);
     }
 }
