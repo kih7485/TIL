@@ -1,2 +1,3 @@
 config.autoconfig.DispatcherServletConfig
 config.autoconfig.TomcatWebServerConfig
+config.autoconfig.JettyWebServerConfig
