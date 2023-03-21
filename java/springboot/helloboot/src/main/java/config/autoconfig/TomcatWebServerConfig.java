@@ -5,6 +5,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.*;
 import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.util.ClassUtils;
 
 @MyAutoConfiguration
 @Conditional(TomcatWebServerConfig.TomcatCondition.class)
@@ -17,7 +18,7 @@ public class TomcatWebServerConfig {
     static class TomcatCondition implements Condition {
         @Override
         public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-            return false;
+            return ClassUtils.isPresent("org.apache.catalina.startup.Tomcat", context.getClassLoader());
         }
     }
 
