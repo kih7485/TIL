@@ -2,4 +2,5 @@ config.autoconfig.DispatcherServletConfig
 config.autoconfig.TomcatWebServerConfig
 config.autoconfig.JettyWebServerConfig
 config.autoconfig.PropertyPlaceholderConfig
-config.autoconfig.ServerPropertiesConfig
+config.autoconfig.PropertyPostProcessorConfig
+config.autoconfig.DataSourceConfig

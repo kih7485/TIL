@@ -1,5 +1,8 @@
 package config.autoconfig;
 
+import org.springframework.stereotype.Component;
+
+@MyConfigurationProperties(prefix="server")
 public class ServerProperties {
 
     public String getContextPath() {
