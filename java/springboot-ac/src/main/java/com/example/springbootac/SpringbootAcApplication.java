@@ -12,11 +12,17 @@ public class SpringbootAcApplication {
 	@Bean
 	ApplicationRunner run(ConditionEvaluationReport report){
 		return args -> {
-			report.getConditionAndOutcomesBySource().entrySet().stream()
-					.filter(co ->co.getValue().isFullMatch())
-					.forEach(co -> {
-						System.out.println(co.getKey() );
-					});
+			System.out.println(report.getConditionAndOutcomesBySource().entrySet().stream()
+					.filter(co -> co.getValue().isFullMatch())
+					.filter(co -> co.getKey().indexOf("Jmx") < 0)
+					.map(co -> {
+						System.out.println(co.getKey());
+						co.getValue().forEach(c -> {
+							System.out.println("\t" + c.getOutcome());
+						});
+						System.out.println();
+						return co;
+					}).count());
 		};
 	}
 	public static void main(String[] args) {
