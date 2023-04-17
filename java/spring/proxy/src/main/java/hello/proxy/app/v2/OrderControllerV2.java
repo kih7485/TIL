@@ -1,11 +1,9 @@
 package hello.proxy.app.v2;
 
-import hello.proxy.app.v1.OrderServiceV1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RequestMapping
