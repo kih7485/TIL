@@ -16,21 +16,26 @@ public class BeanPostProcessorTest {
 
     @Test
     void basicConfig(){
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(BasicConfig.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(BeanPostProcessorConfig.class);
 
-        //A는 빈으로 등록된다.
-        A beanA = applicationContext.getBean("beanA", A.class);
-        beanA.helloA();
+        //beanA 이름으 B 객체가 빈으로 등록된다.
+        B b = applicationContext.getBean("beanA", B.class);
+        b.helloB();
 
-        //B는 빈으로 등록되지 않는다.
-        Assertions.assertThrows(NoSuchBeanDefinitionException.class, () -> applicationContext.getBean(B.class));
+        //A는 빈으로 등록되지 않는다
+        Assertions.assertThrows(NoSuchBeanDefinitionException.class, () -> applicationContext.getBean(A.class));
     }
 
     @Configuration
-    static class BasicConfig{
+    static class BeanPostProcessorConfig{
         @Bean(name = "beanA")
         public A a(){
             return new A();
+        }
+
+        @Bean
+        public AtoBPostProcessor helloPostProcessor(){
+            return new AtoBPostProcessor();
         }
     }
 
@@ -49,7 +54,10 @@ public class BeanPostProcessorTest {
         @Override
         public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
             log.info("beanName={} bean={}", beanName, bean);
-            return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
+            if(bean instanceof A){
+                return new B();
+            }
+            return bean;
         }
     }
 }
