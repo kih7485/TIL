@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 public class OrderRepository {
         public String save(String itemId){
             log.info("OrderRepository 실행");
-                return itemId;
+            if(itemId.equalsIgnoreCase("ex")){
+                throw new IllegalStateException("예외 발생");
+            }
+            return "ok";
         }
 }
