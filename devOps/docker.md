@@ -58,3 +58,43 @@ docker run 옵션
 - --rm: 컨테이너 종료 시 컨테이너를 자동으로 삭제하는 옵션
 - -p: 호스트와 컨테이너 포트를 연결하는 옵션
 - -v: 호스트와 디렉토리를 연결하는 옵션
+
+
+도커에서 특정 경로의 index.html 파일 아파치로 실행
+- docker run -d -p 9999:80 -v /home/ubuntu/2021_DEV_HTML:/usr/local/apache2/htdocs --name apacheweb2 httpd 
+
+도커가 사용하고 있는 저장매체 현황 확인
+- docker system df
+
+실행중인 컨테이너 사용 리소스 확인
+- docker container stats
+
+실행중인 컨테이너에 명령 실행하기
+- docker exec 옵션 컨테이너ID 명령인자
+
+실행중인 컨테이너에 연결하기
+- docker attach 컨테이너이름
+
+모든 컨테이너 삭제
+- docker stop $(docker ps -a -q) #모든 컨테이너 중지
+- docker rm $(docker ps -a -q) #모든 컨테이너 삭제
+- docker container prune # 정지된 컨테이너 삭제
+- docker image prune # 실행중인 컨테이너 image 외의 이미지 삭제
+- docker system prune # 정지된 컨테이너, 실행중인 컨테이너 이미지 외의 이미지, 볼륨, 네트워크 삭제
+
+
+Dockerfile이란?
+- docker 이미지를 작성할 수 있는 기능
+- dockerfile 문법으로 이미지 생성을 위한 스크립트 작성, 이를 기반으로 이미지 생성 가능
+- 이미지 커스터마이징 및, 배포시 주로 사용.
+
+dockerfile 명령어
+- FROM:base 이미지 설정
+- WORKDIR:	작업 디렉터리 설정
+- RUN:	이미지 빌드 시 커맨드 실행
+- ENTRYPOINT:	이미지 실행 시 항상 실행되야 하는 커맨드 설정
+- CMD:	이미지 실행 시 디폴트 커맨드 or 파라미터 설정
+- EXPOSE:	컨테이너가 리스닝할 포트 및 프로토콜 설정
+- COPY/ADD:	이미지의 파일 시스템으로 파일 또는 디렉터리 복사
+- ENV:	환경 변수 설정
+- ARG:	빌드 시 넘어올 수 있는 인자 설정
