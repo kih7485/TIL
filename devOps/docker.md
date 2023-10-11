@@ -98,3 +98,18 @@ dockerfile 명령어
 - COPY/ADD:	이미지의 파일 시스템으로 파일 또는 디렉터리 복사
 - ENV:	환경 변수 설정
 - ARG:	빌드 시 넘어올 수 있는 인자 설정
+
+docker history
+- 이미지 히스토리 확인
+- docker history 컨테이너명
+
+docker cp
+- 컨테이너에서 특정 파일을 호스트 PC로 가져오는 명령
+- 특정 파일 확인을 위해, 활용
+
+docker commit 
+- 컨테이너 변경사항을 이미지 파일로 생성.
+- docker commit -m "add vim" mywebserver myhistory
+
+docker diff 
+- 컨테이너가 실행되면서, 본래의 이미지와 비교해서 변경된 파일 목록 출력 
