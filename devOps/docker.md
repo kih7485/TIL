@@ -113,3 +113,36 @@ docker commit
 
 docker diff 
 - 컨테이너가 실행되면서, 본래의 이미지와 비교해서 변경된 파일 목록 출력 
+- A: 파일추가, D: 파일삭제, C: 파일수정
+
+docker compose 
+- 여러 컨테이너를 모아서 관리하기 위한 툴
+- front, db, backend 서버를 각각 컨테이너로 작성하고, 연결하여 동작하기 때문에 docker compose와 같은 컨테이너 관리 툴이 필요
+```yaml
+# docker compose 파일 포맷 버전 지정
+version: '3'
+
+# 컨테이너 설정
+services:
+
+#컨테이너에서 사용하는 volume 설정으로 대체 가능(옵션)
+volumes:
+
+#컨테이너 간 네트워크 분리를 위한 추가 설정(옵션)
+networks:
+
+
+services:
+    db:
+        image: mysql
+        restart: always #컨테이너가 다운되었을 경우, 항상 재시작하는 설정
+        volumes: #docker run 옵션 중 -v 옵션과 동일한 역할, 여러 volume을 지정할 수 있기 때문에, 리스트처럼 작성
+            - ./mysqldata:/var/lib/mysql
+        environment: #Dockerfile의 ENV 옵션과 동일
+            - MYSQL_ROOT_PASSWORD=admin
+            - MYSQL_DATABASE=testdb
+        env_file: #환경변수값이 들어있는 파일을 읽을 떄
+            - ./mysql_env.txt
+        ports: # docker run -p 옵션과 동일
+            - "3306:3306"
+```
