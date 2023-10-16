@@ -146,3 +146,19 @@ services:
         ports: # docker run -p 옵션과 동일
             - "3306:3306"
 ```
+
+docker compose 명령어
+- docker compose up --build -d #docker compose 시작 --build 는 이미지 재빌드가 필요할때 옵션
+- docker compose stop # docker compose 중지
+- docker compose down #docekr compose 에서 사용하는 컨테이너 삭제 명령
+
+
+Nginx 기본 사용법
+```docker
+docker run -dit -p 80:8080 --name myos ubuntu:20.04
+docker exec -it myos /bin/bash
+
+apt-get update
+apt-get install nginx=1.10.0-0ubuntu1
+apt-get install vim
+```
