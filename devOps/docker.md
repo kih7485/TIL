@@ -159,6 +159,7 @@ docker run -dit -p 80:8080 --name myos ubuntu:20.04
 docker exec -it myos /bin/bash
 
 apt-get update
-apt-get install nginx=1.10.0-0ubuntu1
+apt-get install nginx=1.18.0-0ubuntu1.4
 apt-get install vim
 ```
+nginx 리버스 프록시 설정
