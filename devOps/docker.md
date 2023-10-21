@@ -162,4 +162,25 @@ apt-get update
 apt-get install nginx=1.18.0-0ubuntu1.4
 apt-get install vim
 ```
-nginx 리버스 프록시 설정
+
+모든 컨테이너 삭제
+```docker
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker rmi -f $(docker images -q)
+```
+
+볼륨 삭제
+```docker
+docker volume rm 볼륨이름
+
+# 쓰지 않는 볼륨 삭제
+docker volume prune
+```
+
+볼륨 조회 도커 명령
+```docker
+docker volume ls
+
+docker volume inspect 볼륨이름 #도커 볼륨 상세정보 조회
+```
