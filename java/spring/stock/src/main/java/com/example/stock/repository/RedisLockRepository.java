@@ -8,7 +8,7 @@ import java.time.Duration;
 @Component
 public class RedisLockRepository {
 
-    private RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     public RedisLockRepository(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -20,9 +20,8 @@ public class RedisLockRepository {
                 .setIfAbsent(generateKey(key), "lock", Duration.ofMillis(3_000));
     }
 
-    public Boolean unLock(Long key){
-        return redisTemplate
-                .delete(generateKey(key));
+    public Boolean unlock(Long key){
+        return redisTemplate.delete(generateKey(key));
     }
 
     private String generateKey(Long key) {
