@@ -49,4 +49,16 @@ AOP 용어정리
  - excution: 메서드 실행 조인포인트를 매칭, 스프링AOP에서 가장 많이 사용하고 기능도 복잡.
  - within: 특정 타입 내의 조인포인트를 매칭한다.
  - args: 인자가 주어진 타입의 인스턴스 조인포인트
- 
+
+ 외부설정 우선순위
+ 1. 설정데이터(application.properties)
+ 2. OS 환경변수
+ 3. 자바 시스템 속성
+ 4. 커맨드 라인 옵션 인수(args)
+ 5. @TestPropertySource (테스트에서 사용)
+
+ 설정데이터 우선순위
+ 1. jar 내부 application.properties
+ 2. jar 내부 프로필 적용 파일 application-{profile}.properties
+ 3. jar 외부 application.properties
+ 4. jar 외부 프로필 적용 파일 application-{profile}.properties
