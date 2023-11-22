@@ -62,3 +62,12 @@ AOP 용어정리
  2. jar 내부 프로필 적용 파일 application-{profile}.properties
  3. jar 외부 application.properties
  4. jar 외부 프로필 적용 파일 application-{profile}.properties
+
+spring actuator
+
+기본으로 제공하는 애플리케이션 정보
+- java: 자바 런타임 정보(기본 비활성)
+- os: OS 정보
+- env: Environment에서 info. 로 시작하는 정보(기본 비활성)
+- build: 빌드정보/META-INF/build-info.properties 파일이 필요
+- git: git 정보(기본 비활성화)
