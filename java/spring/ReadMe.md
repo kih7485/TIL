@@ -71,3 +71,39 @@ spring actuator
 - env: Environment에서 info. 로 시작하는 정보(기본 비활성)
 - build: 빌드정보/META-INF/build-info.properties 파일이 필요
 - git: git 정보(기본 비활성화)
+
+#### 매트릭
+
+jvm 매트릭
+- jvm 관련 매트릭 제공. jvm. 으로 시작한다
+- 메모리 및 버퍼 풀 세부정보
+- 가비지 수집 관련 통계
+- 스레드 활용
+- 로드 및 언로드 된 클래스 수
+- jvm 버전정보
+- JIT 컴파일 시간
+
+시스테 메트릭
+- CPU 지표
+- 파일 디스크립터 메트릭
+- 가동시간 메트릭
+- 사용 가능한 디스크 공간
+
+스프링 MVC 메트릭(http.server.request)
+- uri: 요청 uri
+- method: GET, POST 같은 메서드
+- outcome: 상태코드를 그룹으로 모아서 확인
+
+톰캣 메트릭
+```yml
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+```
+- 톰캣의 최대 쓰레드, 사용 쓰레드 수를 포함한 다양한 메트릭을 확인할 수 있다.
+
+사용자 정의 메트릭
+- 사용자가 직접 메트릭 정의
+- 입고 수 , 출고 수, 반품 수 등을 메트릭으로 표시.
+
