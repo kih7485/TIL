@@ -107,3 +107,77 @@ server:
 - 사용자가 직접 메트릭 정의
 - 입고 수 , 출고 수, 반품 수 등을 메트릭으로 표시.
 
+메트릭 예제
+
+- OrderConfig
+```java
+package hello.order.v4;
+
+import hello.order.OrderService;
+import hello.order.v3.OrderServiceImplV3;
+import io.micrometer.core.aop.TimedAspect;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class OrderConfigV4 {
+
+    @Bean
+    OrderService orderService(){
+        return new OrderServiceImplV4();
+    }
+
+    @Bean
+    public TimedAspect timedAspect(MeterRegistry registry){
+        return new TimedAspect(registry);
+    }
+}
+
+```
+-OrderService
+```java
+package hello.order.v4;
+
+import hello.order.OrderService;
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
+
+@Timed("my.order")
+@Slf4j
+public class OrderServiceImplV4 implements OrderService {
+    private AtomicInteger stock = new AtomicInteger(100);
+    @Override
+    public void order() {
+        log.info("주문");
+        stock.decrementAndGet();
+        sleep(500);
+    }
+
+    private void sleep(int l) {
+        try {
+            Thread.sleep(l + new Random().nextInt(200));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void cancel() {
+        log.info("취소");
+        stock.incrementAndGet();
+        sleep(200);
+    }
+
+    @Override
+    public AtomicInteger getStock() {
+        return stock;
+    }
+}
+
+```
