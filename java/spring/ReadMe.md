@@ -181,3 +181,6 @@ public class OrderServiceImplV4 implements OrderService {
 }
 
 ```
+
+마이크로미터 핵심기능
+- Counter, Gauge, Timer , Tags
