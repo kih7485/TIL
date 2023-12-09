@@ -19,7 +19,7 @@
             <property name="hibernate.use_sql_comments" value="true"/>
             <!-- JPA 표준에 맞춘 새로운 키 생성 전략 사용 -->
             <property name="hibernate.id.new_generator_mappings" value="true"/>
-
+            <property name="hibernate.hbm2ddl.auto" value="create"/><!--여기에 옵션입력-->
         </properties>
     </persistence-unit>
 </persistence>
