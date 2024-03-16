@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: local
+
+
+---
+spring:
+  config:
+    active:
+      on-profile: local
+  datasource:
+    hikari:
+      #driver-class-name: com.mysql.cj.jdbc.Driver
+      #jdbc-url: jdbc:mysql://localhost:3306/springbatch?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+      #username: root
+      #password: qaz7485
+      jdbc-url: jdbc:h2:tcp://localhost/~/test
+      # ?? jdbc:h2:tcp://localhost:9092/./data/testdb
+      driver-class-name: org.h2.Driver
+      username: sa
+      password:
+  batch:
+    job:
+      name: testJob
+    jdbc:
+      initialize-schema: always
