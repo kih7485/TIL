@@ -19,7 +19,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import java.util.Map;
 
 @Slf4j
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 public class JobInstanceConfiguration {
 
@@ -61,6 +61,7 @@ public class JobInstanceConfiguration {
             @Override
             public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
                 log.info("===========step2 finished===========");
+//                throw new RuntimeException("step2 has failed");
                 return RepeatStatus.FINISHED;
             }
         }, platformTransactionManager).build();
