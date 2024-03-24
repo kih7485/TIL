@@ -3,6 +3,7 @@ package io.springbatch.springbatch;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -16,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Slf4j
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 public class ExecutionContextConfiguration {
 
@@ -24,6 +25,7 @@ public class ExecutionContextConfiguration {
     private final ExecutionContextTasklet2 executionContextTasklet2;
     private final ExecutionContextTasklet3 executionContextTasklet3;
     private final ExecutionContextTasklet4 executionContextTasklet4;
+    private final JobExecutionListener jobRepositoryListener;
 
     @Bean
     public Job job(JobRepository jobRepository, Step step1, Step step2, Step step3, Step step4){
@@ -32,6 +34,7 @@ public class ExecutionContextConfiguration {
                 .next(step2)
                 .next(step3)
                 .next(step4)
+                .listener(jobRepositoryListener)
                 .build();
     }
 
