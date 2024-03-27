@@ -21,7 +21,6 @@ spring:
       password:
   batch:
     job:
-      enabled: false
-      name: testJob
+      names: ${job.name:NONE}
     jdbc:
       initialize-schema: always

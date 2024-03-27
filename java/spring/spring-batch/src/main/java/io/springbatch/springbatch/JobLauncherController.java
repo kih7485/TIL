@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
-@RestController
+//@RestController
 public class JobLauncherController {
 
-    @Autowired
-    private Job job;
 
     @Autowired
     private JobLauncher jobLauncher;
+
 
     @PostMapping("/batch")
     public String launch(@RequestBody Member member) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
@@ -31,8 +30,6 @@ public class JobLauncherController {
                 .addString("id", member.getId())
                 .addDate("date", new Date())
                 .toJobParameters();
-
-        jobLauncher.run(job, jobParameters);
 
         return "batch completed";
     }
