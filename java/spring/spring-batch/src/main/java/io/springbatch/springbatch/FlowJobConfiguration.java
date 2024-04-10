@@ -1,6 +1,5 @@
 package io.springbatch.springbatch;
 
-import io.springbatch.springbatch.tasklet.CutsomTasklet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -8,21 +7,15 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.Chunk;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import java.util.Arrays;
-
 @Slf4j
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-public class Limit_AllowConfiguration {
+public class FlowJobConfiguration {
 
     @Bean
     public Job job(JobRepository jobRepository, Step step1, Step step2){
