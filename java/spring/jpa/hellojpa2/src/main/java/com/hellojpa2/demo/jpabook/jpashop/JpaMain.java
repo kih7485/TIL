@@ -1,6 +1,7 @@
 package com.hellojpa2.demo.jpabook.jpashop;
 
 import com.hellojpa2.demo.jpabook.jpashop.domain.Member;
+import com.hellojpa2.demo.jpabook.jpashop.domain.Movie;
 import com.hellojpa2.demo.jpabook.jpashop.domain.Team;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -20,25 +21,12 @@ public class JpaMain {
 
         tx.begin();
         try{
-            Team teamA = new Team();
-            teamA.setName("TeamA");
-            em.persist(teamA);
-
-            Member member = new Member();
-            member.setUsername("Member1");
-            member.changeTeam(teamA);
-            em.persist(member);
-
-//            em.flush();
-//            em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
-            Team team1 = findMember.getTeam();
-            List<Member> members = team1.getMembers();
-            for (Member m : members) {
-                log.info("m={}", m.getUsername());
-            }
-
+            Movie movie = new Movie();
+            movie.setDirector("Aaa");
+            movie.setActor("bbb");
+            movie.setName("바람과 함께 사라지다.");
+            movie.setPrice(10_000);
+            em.persist(movie);
             tx.commit();
         }catch (Exception e){
             tx.rollback();

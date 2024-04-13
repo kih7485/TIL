@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter @Setter
 public class Member {
@@ -16,11 +19,16 @@ public class Member {
     private String street;
     private String zipcode;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
+
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
     public void changeTeam(Team team){
         this.team = team;

@@ -1,9 +1,6 @@
 package com.hellojpa2.demo.jpabook.jpashop.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +11,17 @@ public class OrderItem {
     @Column(name = "ORDER_ITEM_ID")
     private Long id;
 
-    @Column(name = "ORDER_ID")
-    private Long orderId;
+//    @Column(name = "ORDER_ID")
+//    private Long orderId;
 
-    @Column(name = "ITEM_ID")
-    private Long itemId;
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "ITEM_ID")
+    private Item item;
+
+//    @Column(name = "ITEM_ID")
+//    private Long itemId;
 }
