@@ -1,5 +1,6 @@
 package com.hellojpa2.demo.jpabook.jpashop;
 
+import com.hellojpa2.demo.jpabook.jpashop.domain.Book;
 import com.hellojpa2.demo.jpabook.jpashop.domain.Member;
 import com.hellojpa2.demo.jpabook.jpashop.domain.Movie;
 import com.hellojpa2.demo.jpabook.jpashop.domain.Team;
@@ -21,12 +22,17 @@ public class JpaMain {
 
         tx.begin();
         try{
-            Movie movie = new Movie();
-            movie.setDirector("Aaa");
-            movie.setActor("bbb");
-            movie.setName("바람과 함께 사라지다.");
-            movie.setPrice(10_000);
-            em.persist(movie);
+            Member member = new Member();
+            member.setUsername("hello");
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            Member findMember = em.getReference(Member.class, member.getId());
+//            Member findMember = em.find(Member.class, member.getId());
+//            log.info("memebername={}", findMember.getUsername());
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
