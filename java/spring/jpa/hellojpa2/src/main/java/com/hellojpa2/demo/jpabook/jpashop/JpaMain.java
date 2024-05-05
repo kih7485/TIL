@@ -22,14 +22,22 @@ public class JpaMain {
 
         tx.begin();
         try{
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
             Member member = new Member();
             member.setUsername("hello");
+            member.setTeam(team);
             em.persist(member);
 
             em.flush();
             em.clear();
 
-            Member findMember = em.getReference(Member.class, member.getId());
+            Member findMember = em.find(Member.class, member.getId());
+            log.info("findMember={}",findMember.getTeam().getClass());
+
+            findMember.getTeam().getName();
 //            Member findMember = em.find(Member.class, member.getId());
 //            log.info("memebername={}", findMember.getUsername());
 

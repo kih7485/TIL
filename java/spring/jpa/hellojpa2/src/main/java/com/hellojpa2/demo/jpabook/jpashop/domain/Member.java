@@ -22,7 +22,8 @@ public class Member extends BaseEntity{
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
-    @ManyToOne
+    //EAGER 즉시로딩
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
