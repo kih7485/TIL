@@ -1,5 +1,5 @@
 package jpabook.jpashop.domain.item;
 
 public enum DeliveryStatus {
-    READY, CAMP
+    READY, COMP
 }
