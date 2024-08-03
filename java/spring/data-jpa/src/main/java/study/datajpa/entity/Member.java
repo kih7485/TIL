@@ -7,7 +7,7 @@ import lombok.*;
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "username", "age"})
-public class Member {
+public class Member extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "member_id")
@@ -15,13 +15,17 @@ public class Member {
     private String username;
     private int age;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
     public Member(String username){
         this.username = username;
     }
 
+    public Member(String name, int age) {
+        this.username = name;
+        this.age = age;
+    }
     public Member(String name, int age, Team team) {
         this.username = name;
         this.age = age;
