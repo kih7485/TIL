@@ -10,19 +10,19 @@ import java.time.Clock;
 
 @Configuration
 public class TestPaymentConfig {
-    @Bean
-    public PaymentService paymentService() {
-        return new PaymentService(cachedExRateProvider(), clock());
-    }
+//    @Bean
+//    public PaymentService paymentService() {
+//        return new PaymentService(cachedExRateProvider(), clock());
+//    }
 
-    @Bean
-    public ExRateProvider cachedExRateProvider() {
-        return new CachedExRateProvider(exRateProvider());
-    }
-    @Bean
-    public ExRateProvider exRateProvider(){
-        return new WebApiExRateProvider(apiTemplate);
-    }
+//    @Bean
+//    public ExRateProvider cachedExRateProvider() {
+//        return new CachedExRateProvider(exRateProvider());
+//    }
+//    @Bean
+//    public ExRateProvider exRateProvider(){
+//        return new WebApiExRateProvider(apiTemplate);
+//    }
 
     @Bean
     public Clock clock(){
