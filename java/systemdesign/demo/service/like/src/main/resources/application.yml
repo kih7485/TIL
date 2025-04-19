@@ -1,1 +1,22 @@
 server.port: 9002
+spring:
+  application:
+    name: kuke-board-like-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/article
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE  # 파라미터 바인딩 로그를 위한 설정
+    org.hibernate.type.descriptor.sql: TRACE
+    org.hibernate.stat: DEBUG

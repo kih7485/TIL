@@ -12,7 +12,6 @@ import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
-@SpringBootTest
 public class ArticleApiTest {
 
     RestClient restClient = RestClient.create("http://localhost:9000");
@@ -108,6 +107,27 @@ public class ArticleApiTest {
         restClient.delete()
                 .uri("/v1/articles/{articleId}", articleId)
                 .retrieve();
+    }
+
+    @Test
+    void countTest(){
+        ArticleResponse response = create(new ArticleCreateRequest("hi", "content", 1L, 2L));
+
+        Long count1 = restClient.get()
+                .uri("/v1/articles/boards/{boardId}/count", response.getBoardId())
+                .retrieve()
+                .body(Long.class);
+        System.out.println("count1 = " + count1);
+
+        restClient.delete()
+                .uri("/v1/articles/{articleId}", response.getArticleId())
+                .retrieve();
+
+        Long count2 = restClient.get()
+                .uri("/v1/articles/boards/{boardId}/count", response.getBoardId())
+                .retrieve()
+                .body(Long.class);
+        System.out.println("count1 = " + count2);
     }
 
     @Getter
