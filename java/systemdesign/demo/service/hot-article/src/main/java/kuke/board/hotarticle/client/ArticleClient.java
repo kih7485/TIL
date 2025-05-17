@@ -10,12 +10,12 @@ import org.springframework.web.client.RestClient;
 
 import java.time.LocalDateTime;
 
-@Slf4j
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class ArticleClient {
     private RestClient restClient;
-    @Value("{endpoints.kuke-board-article-service.url}")
+    @Value("${endpoints.kuke-board-article-service.url}")
     private String articleServiceUrl;
 
     @PostConstruct
@@ -25,6 +25,7 @@ public class ArticleClient {
 
     public ArticleResponse read(Long articleId){
         try {
+            log.info("articleServiceUrl={}",articleServiceUrl);
             return restClient.get()
                     .uri("/v1/articles/{articleId}", articleId)
                     .retrieve()

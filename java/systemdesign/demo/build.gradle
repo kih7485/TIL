@@ -38,4 +38,8 @@ allprojects {
 		useJUnitPlatform()
 	}
 
+	test {
+		jvmArgs '-XX:+EnableDynamicAgentLoading'
+	}
+
 }
