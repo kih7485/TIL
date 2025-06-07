@@ -14,30 +14,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleIdListRepository {
     private final StringRedisTemplate redisTemplate;
-    //article-read::board::{boardId}::article-list
+
+    // article-read::board::{boardId}::article-list
     private static final String KEY_FORMAT = "article-read::board::%s::article-list";
 
-    public void add(Long boardId, Long articleId, Long limit){
+    public void add(Long boardId, Long articleId, Long limit) {
         redisTemplate.executePipelined((RedisCallback<?>) action -> {
             StringRedisConnection conn = (StringRedisConnection) action;
             String key = generateKey(boardId);
             conn.zAdd(key, 0, toPaddedString(articleId));
-            conn.zRemRange(key, 0, limit -1);
+            conn.zRemRange(key, 0, - limit - 1);
             return null;
         });
     }
 
-    public void delete(Long boardId, Long articleId){
+    public void delete(Long boardId, Long articleId) {
         redisTemplate.opsForZSet().remove(generateKey(boardId), toPaddedString(articleId));
     }
 
-    public List<Long> readAll(Long boardId, Long offset, Long limit){
+    public List<Long> readAll(Long boardId, Long offset, Long limit) {
         return redisTemplate.opsForZSet()
-                .reverseRange(generateKey(boardId), offset, offset + limit -1)
+                .reverseRange(generateKey(boardId), offset, offset + limit - 1)
                 .stream().map(Long::valueOf).toList();
     }
 
-    public List<Long> reallAllInfiniteScroll(Long boardId, Long lastArticleId, Long limit){
+    public List<Long> readAllInfiniteScroll(Long boardId, Long lastArticleId, Long limit) {
         return redisTemplate.opsForZSet().reverseRangeByLex(
                 generateKey(boardId),
                 lastArticleId == null ?
@@ -47,11 +48,12 @@ public class ArticleIdListRepository {
         ).stream().map(Long::valueOf).toList();
     }
 
-    private String toPaddedString(Long articleId){
+    private String toPaddedString(Long articleId) {
         return "%019d".formatted(articleId);
-        //1234 -> 0000000000000001234
+        // 1234 -> 0000000000000001234
     }
-    private String generateKey(Long boardId){
+
+    private String generateKey(Long boardId) {
         return KEY_FORMAT.formatted(boardId);
     }
 }
