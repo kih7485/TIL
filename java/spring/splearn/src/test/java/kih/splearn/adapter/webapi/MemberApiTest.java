@@ -4,7 +4,6 @@ import kih.splearn.application.member.provided.MemberRegister;
 import kih.splearn.domain.MemberFixture;
 import kih.splearn.domain.member.Member;
 import kih.splearn.domain.member.MemberRegisterRequest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -14,7 +13,6 @@ import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import tools.jackson.databind.ObjectMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

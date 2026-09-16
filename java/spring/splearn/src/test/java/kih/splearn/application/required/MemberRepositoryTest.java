@@ -3,7 +3,9 @@ package kih.splearn.application.required;
 import jakarta.persistence.EntityManager;
 import kih.splearn.application.member.required.MemberRepository;
 import kih.splearn.domain.member.Member;
+import kih.splearn.domain.member.MemberRegisterInfo;
 import kih.splearn.domain.member.MemberStatus;
+import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +17,14 @@ import static kih.splearn.domain.MemberFixture.createPasswordEncoder;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
+@RequiredArgsConstructor
 class MemberRepositoryTest {
-    @Autowired
-    MemberRepository memberRepository;
-
-    @Autowired
-    EntityManager entityManager;
+    final MemberRepository memberRepository;
+    final EntityManager entityManager;
 
     @Test
     void createMember(){
-        Member member = Member.create(createMemberRegisterRequest(), createPasswordEncoder());
+        Member member = Member.register(createMemberRegisterRequest().toInfo(), createPasswordEncoder());
 
         assertThat(member.getId()).isNull();
 
@@ -42,10 +42,11 @@ class MemberRepositoryTest {
 
     @Test
     void duplicateEmailFail(){
-        Member member = Member.create(createMemberRegisterRequest(), createPasswordEncoder());
+        MemberRegisterInfo memberRegisterRequest = createMemberRegisterRequest().toInfo();
+        Member member = Member.register(memberRegisterRequest, createPasswordEncoder());
         memberRepository.save(member);
 
-        Member member2 = Member.create(createMemberRegisterRequest(), createPasswordEncoder());
+        Member member2 = Member.register(memberRegisterRequest, createPasswordEncoder());
         assertThatThrownBy(() -> memberRepository.save(member2))
                 .isInstanceOf(DataIntegrityViolationException.class);
     }

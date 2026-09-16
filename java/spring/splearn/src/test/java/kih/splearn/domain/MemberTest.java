@@ -1,9 +1,6 @@
 package kih.splearn.domain;
 
-import kih.splearn.domain.member.Member;
-import kih.splearn.domain.member.MemberInfoUpdateRequest;
-import kih.splearn.domain.member.MemberStatus;
-import kih.splearn.domain.member.PasswordEncoder;
+import kih.splearn.domain.member.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +13,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class MemberTest {
     Member member;
     PasswordEncoder passwordEncoder;
+    MemberRegisterInfo registerRequest;
 
     @BeforeEach
     void setup(){
         this.passwordEncoder = createPasswordEncoder();
-        member = Member.create(createMemberRegisterRequest(), passwordEncoder);
+        registerRequest = createMemberRegisterRequest().toInfo();
+        member = Member.register(registerRequest, passwordEncoder);
     }
 
     @Test
@@ -49,7 +48,7 @@ class MemberTest {
 
     @Test
     void verifyPassword(){
-        assertThat(member.verifyPassword("secret2468!@", passwordEncoder)).isTrue();
+        assertThat(member.verifyPassword(registerRequest.password(), passwordEncoder)).isTrue();
         assertThat(member.verifyPassword("hello", passwordEncoder)).isFalse();
     }
 
@@ -71,9 +70,9 @@ class MemberTest {
     @Test
     void invalidEmail(){
         assertThatThrownBy(() ->
-                Member.create(createMemberRegisterRequest("invalid email"), passwordEncoder)
+                Member.register(createMemberRegisterRequest("invalid email").toInfo(), passwordEncoder)
         ).isInstanceOf(IllegalStateException.class);
-        member = Member.create(createMemberRegisterRequest(), passwordEncoder);
+        member = Member.register(createMemberRegisterRequest().toInfo(), passwordEncoder);
     }
 
     @Test

@@ -42,12 +42,12 @@ public class Member extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private MemberDetail detail;
 
-    public static Member create(MemberRegisterRequest createRequest, PasswordEncoder passwordEncoder){
+    public static Member register(MemberRegisterInfo registerInfo, PasswordEncoder passwordEncoder){
         Member member = new Member();
 
-        member.email = new Email(createRequest.email());
-        member.nickname = requireNonNull(createRequest.nickname());
-        member.passwordHash = requireNonNull(passwordEncoder.encode(createRequest.password()));
+        member.email = new Email(registerInfo.email());
+        member.nickname = requireNonNull(registerInfo.nickname());
+        member.passwordHash = requireNonNull(passwordEncoder.encode(registerInfo.password()));
         member.status = MemberStatus.PENDING;
 
         member.detail = MemberDetail.crete();
@@ -55,7 +55,8 @@ public class Member extends AbstractEntity {
         return member;
     }
 
-    public void activate(){
+
+        public void activate(){
         Assert.state(status == MemberStatus.PENDING, "PENDING 상태가 아닙니다.");
         this.status = MemberStatus.ACTIVE;
         this.detail.activate();
@@ -86,5 +87,9 @@ public class Member extends AbstractEntity {
 
     public void changePassword(String password, PasswordEncoder passwordEncoder) {
         this.passwordHash = passwordEncoder.encode(requireNonNull(password));
+    }
+
+    public void ensureActive() {
+        Assert.state(status == MemberStatus.ACTIVE, "회원의 상태가 ACTIVE가 아닙니다.");
     }
 }

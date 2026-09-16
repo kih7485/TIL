@@ -4,8 +4,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintViolationException;
 import kih.splearn.SplearnTestConfiguration;
 import kih.splearn.application.member.provided.MemberRegister;
+import kih.splearn.domain.member.MemberRegisterRequest;
 import kih.splearn.domain.*;
 import kih.splearn.domain.member.*;
+import kih.splearn.support.stereotype.ApplicationServiceTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,9 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@SpringBootTest
-@Transactional
-@Import(SplearnTestConfiguration.class)
+
+@ApplicationServiceTest
 record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityManager) {
     @Test
     void register(){
@@ -29,9 +30,10 @@ record MemberRegisterTest(MemberRegister memberRegister, EntityManager entityMan
     }
     @Test
     void duplicateEmailFail(){
-        Member member = memberRegister.register(MemberFixture.createMemberRegisterRequest());
+        MemberRegisterRequest memberRegisterRequest = MemberFixture.createMemberRegisterRequest();
+        Member member = memberRegister.register(memberRegisterRequest);
 
-        assertThatThrownBy(() -> memberRegister.register(MemberFixture.createMemberRegisterRequest()))
+        assertThatThrownBy(() -> memberRegister.register(memberRegisterRequest))
                         .isInstanceOf(DuplicateEmailException.class);
         Assertions.assertThat(member.getId()).isNotNull();
         Assertions.assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);

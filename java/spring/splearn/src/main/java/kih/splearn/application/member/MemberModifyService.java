@@ -1,20 +1,19 @@
 package kih.splearn.application.member;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import kih.splearn.application.member.provided.MemberRegister;
+import kih.splearn.domain.member.MemberRegisterRequest;
 import kih.splearn.application.member.required.EmailSender;
 import kih.splearn.application.member.required.MemberRepository;
 import kih.splearn.domain.member.*;
 import kih.splearn.domain.shared.Email;
+import kih.splearn.support.stereotype.ApplicationService;
+import kih.splearn.support.stereotype.ValidatedApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-@Service
-@Transactional
-@Validated
+@ValidatedApplicationService
 @RequiredArgsConstructor
 public class MemberModifyService implements MemberRegister {
     private final MemberRepository memberRepository;
@@ -25,7 +24,7 @@ public class MemberModifyService implements MemberRegister {
     public Member register(MemberRegisterRequest request) {
         checkDuplicateEmail(request);
 
-        Member member = Member.create(request, passwordEncoder);
+        Member member = Member.register(request.toInfo(), passwordEncoder);
 
         memberRepository.save(member);
 

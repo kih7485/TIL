@@ -38,6 +38,7 @@ dependencies {
 	testAnnotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.junit-pioneer:junit-pioneer:2.3.0")
 	testImplementation("org.mockito:mockito-core:5.23.0")
+	testImplementation("org.instancio:instancio-core:6.0.0-RC4")
 	mockitoAgent("org.mockito:mockito-core:5.23.0"){isTransitive = false}
 }
 

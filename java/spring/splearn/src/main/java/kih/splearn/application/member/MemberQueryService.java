@@ -3,14 +3,13 @@ package kih.splearn.application.member;
 import kih.splearn.application.member.provided.MemberFinder;
 import kih.splearn.application.member.required.MemberRepository;
 import kih.splearn.domain.member.Member;
+import kih.splearn.support.stereotype.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-@Service
-@Transactional
-@Validated
+@ApplicationService
 @RequiredArgsConstructor
 public class MemberQueryService implements MemberFinder {
     private final MemberRepository memberRepository;

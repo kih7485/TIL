@@ -6,15 +6,15 @@ import kih.splearn.application.member.provided.MemberFinder;
 import kih.splearn.application.member.provided.MemberRegister;
 import kih.splearn.domain.member.Member;
 import kih.splearn.domain.MemberFixture;
+import kih.splearn.support.stereotype.ApplicationServiceTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
-@Transactional
-@Import(SplearnTestConfiguration.class)
+
+@ApplicationServiceTest
 record MemberFinderTest(MemberFinder memberFinder, MemberRegister memberRegister, EntityManager entityManager) {
 
     @Test
