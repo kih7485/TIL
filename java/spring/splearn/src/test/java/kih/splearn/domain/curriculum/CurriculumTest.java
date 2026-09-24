@@ -216,9 +216,60 @@ class CurriculumTest {
     void validate(){
         Curriculum curriculum = CurriculumFixture.createCurriculum();
 
+        curriculum.addSection("S0");
+        curriculum.addLesson(0, "L0");
+
+        curriculum.validate();
+
+        Section s1 = curriculum.addSection("S1");
+        curriculum.addLesson(1, "L1");
+
+        curriculum.validate();
+
+        curriculum.removeLesson(1, 0);
+        
+        assertThatThrownBy(curriculum::validate)
+            .isInstanceOf(InvalidCurriculumException.class);
+    }
+
+    @Test
+    void firstLesson(){
+        Curriculum curriculum = CurriculumFixture.createCurriculum();
+
         Section s0 = curriculum.addSection("S0");
         Section s1 = curriculum.addSection("S1");
 
-        curriculum.validate();
+        Assertions.assertThat(curriculum.firstLesson()).isEmpty();
+
+        Lesson l0_0 = curriculum.addLesson(0, "L0_0");
+        Lesson l0_1 = curriculum.addLesson(0, "L0_1");
+        Lesson l0_2 = curriculum.addLesson(0, "L0_2");
+        Lesson l1_0 = curriculum.addLesson(1, "L1_0");
+        Lesson l1_1 = curriculum.addLesson(1, "L1_1");
+        Lesson l1_2 = curriculum.addLesson(1, "L1_2");
+
+        Assertions.assertThat(curriculum.firstLesson().orElseThrow()).isEqualTo(l0_0);
+
+    }
+
+    @Test
+    void next(){
+        Curriculum curriculum = CurriculumFixture.createCurriculum();
+        Section s0 = curriculum.addSection("S0");
+        Section s1 = curriculum.addSection("S1");
+
+        Lesson l0_0 = curriculum.addLesson(0, "L0_0");
+        Lesson l1_0 = curriculum.addLesson(1, "L1_0");
+        Lesson l1_1 = curriculum.addLesson(1, "L1_1");
+
+        Lesson lesson = curriculum.firstLesson().orElseThrow();
+
+        lesson = curriculum.nextLesson(lesson).orElseThrow();
+        Assertions.assertThat(lesson).isEqualTo(l1_0);
+
+        lesson = curriculum.nextLesson(lesson).orElseThrow();
+        Assertions.assertThat(lesson).isEqualTo(l1_1);
+        Assertions.assertThat(curriculum.nextLesson(lesson)).isEmpty();
+
     }
 }

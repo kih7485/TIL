@@ -1,4 +1,7 @@
 package kih.splearn.domain.curriculum;
 
-public class InvalidCurriculumException {
+public class InvalidCurriculumException extends RuntimeException {
+    public InvalidCurriculumException(String message) {
+        super(message);
+    }
 }
